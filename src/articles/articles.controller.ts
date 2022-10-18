@@ -6,7 +6,9 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { Article } from './article.entity';
 import { ArticlesService } from './articles.service';
 
@@ -24,16 +26,19 @@ export class ArticlesController {
     return this.articlesService.getArticle(id);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   createArticle(@Body() article: Article) {
     return this.articlesService.saveArticle(article);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Put()
   updateArticle(@Body() article: Article) {
     return this.articlesService.saveArticle(article);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   deleteArticle(@Param('id') id: number) {
     return this.articlesService.deleteArticle(id);
